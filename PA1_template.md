@@ -155,8 +155,10 @@ cat("The means of both datasets should be the same. Old:", mean(data2$steps,na.r
 ```r
 data2$factor.date = data$date
 
+hist(data2$filled.steps,main = "Total steps taken each day (yellow)",
+     ylab="Frequency",xlab="Steps taken", col="yellow",sub = "blue diagonal shaded histogram overlayed to show equivalence")
 hist(data2$filled.steps,main = "Total steps taken each day",
-     ylab="Frequency",xlab="Steps taken", col="blue")
+     ylab="Frequency",xlab="Steps taken", col="blue",density=15,add=T)
 ```
 
 ![plot of chunk comparison_to_first_histogram](figure/comparison_to_first_histogram-1.png) 
