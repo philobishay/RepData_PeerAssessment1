@@ -30,13 +30,19 @@ str(data2)
 
 
 ## What is mean total number of steps taken per day?
-### **NOTE**: It was not clear to me whether I should aggregate by each day (as written in the assignment), or whether I should aggregate by the seven days of the week. I made a literal interpretation of the instruction.
 ```{r steps_per_day, echo = TRUE}
-steps.each.day = aggregate(steps~date, data=data,FUN=sum)
-barplot(steps.each.day$steps,names.arg=steps.each.day$date,main = "Total steps taken each day", xlab="Date",ylab="Steps taken", col="red")
+
+hist(data2$steps,main = "Total steps taken each day",
+     ylab="Frequency",xlab="Steps taken", col="red")
 #mean and median:
   step.summary = summary(data2$steps)
   step.summary[c(4,3)]
+```
+### Note, there is a large point mass at zero, so I show the histogram a second time excluding zero-step data.
+
+```{r second_histogram, echo = TRUE}
+  hist(data2$steps[data2$steps>0],main = "Total steps excluding zeroes", ylab="Frequency",xlab="Steps taken", col="green")
+  
 ```
 
 ## What is the average daily activity pattern?
@@ -82,8 +88,11 @@ cat("The means of both datasets should be the same. Old:", mean(data2$steps,na.r
 ### Compare to original histogram
 ```{r comparison_to_first_histogram, echo = TRUE}
 data2$factor.date = data$date
-steps.each.day2 = aggregate(filled.steps~factor.date, data=data2,FUN=sum)
-barplot(steps.each.day2$filled.steps,names.arg=steps.each.day2$factor.date,main = "Total steps taken each day", xlab="Date",ylab="Steps taken", col="red")
+
+hist(data2$filled.steps,main = "Total steps taken each day",
+     ylab="Frequency",xlab="Steps taken", col="blue")
+
+
 #mean and median:
   step.summary2 = summary(data2$filled.steps)
   step.summary2[c(4,3)]
@@ -109,4 +118,8 @@ summary.data = aggregate(filled.steps~interval+weekday.or.weekend, data=data2, F
 xyplot(filled.steps ~ interval | weekday.or.weekend, data = summary.data, layout = c(1, 2), type = "l",
        xlab="5-minute Intervals", ylab="Number of Steps",
        main="Steps on Weekends and Weekdays")
+```
+
+```{r knit2HTML, echo=FALSE}
+knit2html("PA1_template.Rmd")
 ```

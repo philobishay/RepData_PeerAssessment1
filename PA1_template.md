@@ -36,11 +36,10 @@ str(data2)
 
 
 ## What is mean total number of steps taken per day?
-### **NOTE**: It was not clear to me whether I should aggregate by each day (as written in the assignment), or whether I should aggregate by the seven days of the week. I made a literal interpretation of the instruction.
 
 ```r
-steps.each.day = aggregate(steps~date, data=data,FUN=sum)
-barplot(steps.each.day$steps,names.arg=steps.each.day$date,main = "Total steps taken each day", xlab="Date",ylab="Steps taken", col="red")
+hist(data2$steps,main = "Total steps taken each day",
+     ylab="Frequency",xlab="Steps taken", col="red")
 ```
 
 ![plot of chunk steps_per_day](figure/steps_per_day-1.png) 
@@ -55,6 +54,14 @@ barplot(steps.each.day$steps,names.arg=steps.each.day$date,main = "Total steps t
 ##   Mean Median 
 ##  37.38   0.00
 ```
+### Note, there is a large point mass at zero, so I show the histogram a second time excluding zero-step data.
+
+
+```r
+  hist(data2$steps[data2$steps>0],main = "Total steps excluding zeroes", ylab="Frequency",xlab="Steps taken", col="green")
+```
+
+![plot of chunk second_histogram](figure/second_histogram-1.png) 
 
 ## What is the average daily activity pattern?
 
@@ -147,8 +154,9 @@ cat("The means of both datasets should be the same. Old:", mean(data2$steps,na.r
 
 ```r
 data2$factor.date = data$date
-steps.each.day2 = aggregate(filled.steps~factor.date, data=data2,FUN=sum)
-barplot(steps.each.day2$filled.steps,names.arg=steps.each.day2$factor.date,main = "Total steps taken each day", xlab="Date",ylab="Steps taken", col="red")
+
+hist(data2$filled.steps,main = "Total steps taken each day",
+     ylab="Frequency",xlab="Steps taken", col="blue")
 ```
 
 ![plot of chunk comparison_to_first_histogram](figure/comparison_to_first_histogram-1.png) 
@@ -199,3 +207,14 @@ xyplot(filled.steps ~ interval | weekday.or.weekend, data = summary.data, layout
 ```
 
 ![plot of chunk plot_weekends](figure/plot_weekends-1.png) 
+
+
+```
+## 
+## 
+## processing file: PA1_template.Rmd
+```
+
+```
+## Error in parse_block(g[-1], g[1], params.src): duplicate label 'load_data'
+```
